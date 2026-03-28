@@ -1,0 +1,3 @@
+!/usr/bin/env bash
+# "bash" sözü ken proseslerin PID-sini ve  adını g�eren skript
+pgrep -l bash
