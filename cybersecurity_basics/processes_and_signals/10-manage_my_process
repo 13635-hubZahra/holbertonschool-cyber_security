@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Init script to start, stop, or restart manage_my_process
+
+PID_FILE="/tmp/my_process.pid"
+EXECUTABLE="./manage_my_process"
+
+case "$1" in
+    start)
+        # & işarəsi proqramı arxa planda (background) işə salır
+        $EXECUTABLE &
+        # $! sonuncu arxa planda işə düşən prosesin PID-sidir
+        echo "$!" > "$PID_FILE"
+        echo "manage_my_process started"
+        ;;
+    stop)
+        if [ -f "$PID_FILE" ]; then
+            kill "$(cat "$PID_FILE")"
+            rm "$PID_FILE"
+            echo "manage_my_process stopped"
+        fi
+        ;;
+    restart)
+        # Əvvəlcə dayandırırıq
+        if [ -f "$PID_FILE" ]; then
+            kill "$(cat "$PID_FILE")"
+            rm "$PID_FILE"
+        fi
+        # Sonra yenidən başladırıq
+        $EXECUTABLE &
+        echo "$!" > "$PID_FILE"
+        echo "manage_my_process restarted"
+        ;;
+    *)
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac
