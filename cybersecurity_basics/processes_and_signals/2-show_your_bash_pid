@@ -1,0 +1,4 @@
+#!/bin/bash
+# A script that lists all processes containing the string "bash"
+# shellcheck disable=SC2009
+ps auxf | grep bash
