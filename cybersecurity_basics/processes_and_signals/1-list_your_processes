@@ -1,0 +1,3 @@
+#!/bin/bash
+# A script that lists all running processes in a user-oriented format with hierarchy
+ps auxf
