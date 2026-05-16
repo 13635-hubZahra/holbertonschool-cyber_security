@@ -1,7 +1,6 @@
 #!/bin/bash
-RESULT=$(grep "smtpd_tls_security_level" /etc/postfix/main.cf | grep -v "^#")
-if [ -z "$RESULT" ]; then
-    echo "STARTTLS not configured"
+if grep -q "^smtpd_tls_security_level" /etc/postfix/main.cf; then
+    grep "^smtpd_tls_security_level" /etc/postfix/main.cf
 else
-    echo "$RESULT"
+    echo "STARTTLS not configured"
 fi
