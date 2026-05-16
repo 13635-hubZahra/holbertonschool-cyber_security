@@ -1,2 +1,2 @@
 #!/bin/bash
-sed '/^#/d; /^[[:space:]]*$/d' /etc/ssh/sshd_config
+grep -vE '^#|^[[:space:]]*#|^$' /etc/ssh/sshd_config
