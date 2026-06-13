@@ -1,0 +1,7 @@
+admin
+administrator
+panel
+login
+secret
+private
+control
