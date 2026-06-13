@@ -12,18 +12,22 @@ whois "$DOMAIN" | awk -v ORS="" '
 BEGIN {
     split("Registrant,Admin,Tech", groups, ",")
     split("Name,Organization,Street,City,State/Province,Postal Code,Country,Phone,Phone Ext,Fax,Fax Ext,Email", fields, ",")
-    count = 0
 }
 
 {
-    sub(/^[ \t]+/, "")
-    if ($0 ~ /^[A-Za-z ]+:/) {
-        colon_idx = index($0, ":")
-        key = substr($0, 1, colon_idx - 1)
-        value = substr($0, colon_idx + 1)
+    clean_line = $0
+    sub(/^[ \t]+/, "", clean_line)
+    sub(/[ \t\r\n]+$/, "", clean_line)
+    
+    if (clean_line ~ /^[A-Za-z ]+:/) {
+        colon_idx = index(clean_line, ":")
+        key = substr(clean_line, 1, colon_idx - 1)
+        value = substr(clean_line, colon_idx + 1)
         
         sub(/^[ \t]+/, "", value)
-        sub(/[ \t\r\n]+$/, "", value)
+        sub(/[ \t]+$/, "", value)
+        
+        sub(/^[A-Za-z ]+ /, "", key)
         
         data[key] = value
     }
@@ -36,10 +40,9 @@ END {
         for (j = 1; j <= 12; j++) {
             f = fields[j]
             
-            whois_key = g " " f
-            val = data[whois_key]
-            
+            val = data[f]
             csv_field = g " " f
+            
             if (f ~ /Ext$/) {
                 csv_field = csv_field ":"
             }
